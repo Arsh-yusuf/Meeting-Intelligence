@@ -1,0 +1,11 @@
+langchain
+faiss-cpu
+python-dotenv
+requests
+scikit-learn
+openai
+sentence-transformers
+langchain_community
+langchain-huggingface
+langchain-openai
+langgraph
