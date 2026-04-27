@@ -12,13 +12,17 @@ This project transforms raw meeting recordings (transcripts) into actionable pro
 - **Multi-Agent Orchestration**: Powered by LangGraph to coordinate specialized agents for Summarization, Keyword Extraction, and Taxonomy Building.
 - **ClickUp Integration**: Automatically pushes consolidated intelligence reports to ClickUp tasks via API.
 - **Parallel Generation**: Includes a high-speed dummy data generator for rapid testing and prototyping.
+- **LangServe API**: Exposes the full pipeline as a REST + Streaming API via FastAPI.
+- **Dockerized**: Fully containerized backend and Next.js frontend.
 
 ## 🛠️ Tech Stack
-- **Framework**: LangChain, LangGraph
-- **Vector Database**: FAISS (Local)
+- **Framework**: LangChain, LangGraph, LangServe
+- **Vector Database**: FAISS (Local, upgradeable to ChromaDB)
 - **LLM**: OpenAI / OpenRouter
 - **Embeddings**: HuggingFace (all-MiniLM-L6-v2)
-- **Database**: Local JSON storage
+- **API Server**: FastAPI + Uvicorn
+- **Frontend**: LangChain Next.js Template
+- **Containerization**: Docker + Docker Compose
 
 ## 📁 Project Structure
 ```text
@@ -27,39 +31,79 @@ This project transforms raw meeting recordings (transcripts) into actionable pro
 ├── rag/               # RAG Pipeline (Ingestion, Retrieval, Vector Store)
 ├── config/            # System Configuration & Settings
 ├── data/              # Persistent Storage (JSON & Vector Index)
-└── main.py            # Entry point for the application
+├── frontend/          # Next.js frontend (cloned from LangChain template)
+├── server.py          # LangServe API server (FastAPI)
+├── main.py            # CLI entry point (unchanged)
+├── Dockerfile         # Backend container definition
+└── docker-compose.yml # Orchestrates backend + frontend
 ```
 
 ## ⚙️ Setup Instructions
+
+### Option A: Local (CLI)
 
 1. **Clone the repository** and navigate to the root directory.
 2. **Create a Virtual Environment**:
    ```bash
    python -m venv venv
-   source venv/bin/activate  # Windows: venv\Scripts\activate
+   venv\Scripts\activate   # Windows
    ```
 3. **Install Dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
-4. **Configure Environment**:
-   Create a `.env` file in the root directory:
+4. **Configure Environment** — create a `.env` file:
    ```env
    OPENROUTER_API_KEY=your_key_here
-   CLICKUP_API_KEY=your_key_here
+   OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+   MODEL=meta-llama/llama-3-8b-instruct
+   CLICKUP_API_KEY=your_clickup_key
    CLICKUP_TASK_ID=your_task_id
    ```
+5. **Run the CLI pipeline**:
+   ```bash
+   python main.py
+   ```
 
-## 🚀 Usage
+---
 
-Run the main intelligence pipeline:
+### Option B: Docker (API + Frontend)
+
+#### Step 1 — Clone the Next.js frontend template
 ```bash
-python main.py
+git clone https://github.com/langchain-ai/langchain-nextjs-template ./frontend
 ```
 
-The system will:
-1. Generate/Load meeting transcripts.
-2. Index them into the Vector Store.
-3. Run the Map-Reduce Orchestrator.
-4. Post the final intelligence report to ClickUp.
+#### Step 2 — Ensure your `.env` file is populated (see above)
 
+#### Step 3 — Build and start all services
+```bash
+docker-compose up --build
+```
+
+#### Step 4 — Access the services
+| Service  | URL |
+|----------|-----|
+| Backend API (Swagger UI) | http://localhost:8000/docs |
+| Backend Health Check | http://localhost:8000/health |
+| Analyze Endpoint | http://localhost:8000/analyze/invoke |
+| Frontend | http://localhost:3000 |
+
+#### Step 5 — Run the CLI inside Docker (optional)
+```bash
+docker-compose exec backend python main.py
+```
+
+---
+
+### API Usage (LangServe)
+
+Send a POST request to analyze your meetings:
+```bash
+curl -X POST http://localhost:8000/analyze/invoke \
+  -H "Content-Type: application/json" \
+  -d '{"input": {"query": "Summarize all trending topics from recent meetings."}}'
+```
+
+## 📄 License
+MIT

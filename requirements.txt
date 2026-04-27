@@ -1,4 +1,5 @@
 langchain
+langchain-text-splitters
 faiss-cpu
 python-dotenv
 requests
@@ -8,4 +9,10 @@ sentence-transformers
 langchain_community
 langchain-huggingface
 langchain-openai
-langgraph
+langgraph
+
+# Server layer
+fastapi
+uvicorn[standard]
+sse-starlette
+langserve

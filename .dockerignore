@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.Python
+venv/
+env/
+.tox/
+.coverage
+.cache
+*.log
+
+# Virtual environment
+venv/
+
+# Environment secrets - never bake into image
+.env
+
+# Local data (mounted as a Docker volume instead)
+data/vector_store/
+data/meetings.json
+
+# IDE
+.vscode/
+.idea/
+
+# Git
+.git/
+.gitignore
+
+# Frontend (has its own Dockerfile)
+frontend/node_modules/
+frontend/.next/

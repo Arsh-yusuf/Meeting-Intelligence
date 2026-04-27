@@ -1,0 +1,44 @@
+
+services:
+
+  # ── Python / LangServe Backend ────────────────────────────────────────────
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: meeting-intelligence-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount the data folder so the vector store & meetings.json
+      # persist on your host machine across container restarts
+      - ./data:/app/data
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+
+  # ── Next.js Frontend (LangChain template) ────────────────────────────────
+  frontend:
+    # Clone the template into ./frontend before first run:
+    #   git clone https://github.com/langchain-ai/langchain-nextjs-template ./frontend
+    build:
+      context: ./frontend/langchain-nextjs-template
+      dockerfile: Dockerfile
+    container_name: meeting-intelligence-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      # Points the frontend at the backend service by Docker network name
+      - NEXT_PUBLIC_LANGCHAIN_API_URL=http://backend:8000
+    env_file:
+      - .env
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
