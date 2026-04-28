@@ -7,13 +7,15 @@ A modular, scalable multi-agent system designed to ingest meeting transcripts, a
 This project transforms raw meeting recordings (transcripts) into actionable project intelligence. It uses a **Master-Slave Agent Architecture** to ensure high-fidelity analysis across any number of meetings.
 
 ### Key Features
-- **Map-Reduce Summarization**: Every meeting is summarized individually before being aggregated into a master report, ensuring 100% data coverage.
-- **RAG Architecture**: Uses FAISS vector storage for semantic retrieval of meeting context.
-- **Multi-Agent Orchestration**: Powered by LangGraph to coordinate specialized agents for Summarization, Keyword Extraction, and Taxonomy Building.
-- **ClickUp Integration**: Automatically pushes consolidated intelligence reports to ClickUp tasks via API.
-- **Parallel Generation**: Includes a high-speed dummy data generator for rapid testing and prototyping.
-- **LangServe API**: Exposes the full pipeline as a REST + Streaming API via FastAPI.
-- **Dockerized**: Fully containerized backend and Next.js frontend.
+- **Proactive Intelligence**: Analyzes and summarizes meetings the moment they are ingested, ensuring zero-latency responses for users.
+- **Incremental Ingestion**: Only processes new meetings and intelligently updates the project-wide Master Report.
+- **Hybrid RAG Architecture**: A unified retrieval system that provides the AI with both raw transcript context and high-level pre-processed insights.
+- **Premium UI Overhaul**:
+    - **Action Item Highlighting**: Automatically detects and styles task items as distinct cards.
+    - **Collapsible Technical Views**: Neatly organizes complex data like Taxonomies into collapsible sections.
+    - **Markdown Support**: Full support for rich text and structured formatting in AI responses.
+- **ClickUp Integration**: Seamlessly syncs consolidated meeting intelligence with project tasks.
+- **LangServe API**: Exposes the full proactive pipeline as a scalable API via FastAPI.
 
 ## 🛠️ Tech Stack
 - **Framework**: LangChain, LangGraph, LangServe
@@ -22,7 +24,12 @@ This project transforms raw meeting recordings (transcripts) into actionable pro
 - **Embeddings**: HuggingFace (all-MiniLM-L6-v2)
 - **API Server**: FastAPI + Uvicorn
 - **Frontend**: LangChain Next.js Template
-- **Containerization**: Docker + Docker Compose
+## 🧠 Proactive Intelligence Workflow
+Unlike traditional RAG systems that analyze data on-demand, this platform uses a **Proactive Sync** model:
+1. **Ingest**: New transcripts are added.
+2. **Analyze**: The system immediately summarizes the meeting and updates the project-wide **Master Report**.
+3. **Embed**: Both raw text and high-level summaries are indexed into the FAISS Vector DB.
+4. **Retrieve**: When a user asks a question, the AI instantly pulls the pre-computed intelligence, delivering expert-level insights without the wait.
 
 ## 📁 Project Structure
 ```text
