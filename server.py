@@ -20,15 +20,19 @@ from sources.dummy import DummyMeetingSource
 
 # ── Bootstrap data on startup ────────────────────────────────────────────────
 def _ensure_data():
-    """Seed the vector store with dummy data if meetings.json is empty."""
+    """Seed the vector store with dummy data if meetings.json is empty, then run proactive ingestion."""
     meetings_file = "data/meetings.json"
+    
+    # 1. Generate data if missing
     if not os.path.exists(meetings_file) or os.path.getsize(meetings_file) <= 10:
         print("[server] No data found — generating 5 dummy meetings...")
         ingest(sources=[DummyMeetingSource(count=5)])
-        print("[server] Ingestion complete.")
     else:
-        print("[server] Existing data found — loading vector store...")
-        ingest()   # Re-index without re-generating
+        # 2. Run proactive ingestion to summarize any new meetings and update master report
+        print("[server] Existing data found — synchronizing intelligence...")
+        ingest() 
+    
+    print("[server] Intelligence synchronization complete.")
 
 # ── FastAPI app ───────────────────────────────────────────────────────────────
 app = FastAPI(

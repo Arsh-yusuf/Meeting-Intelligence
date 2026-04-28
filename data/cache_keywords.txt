@@ -1,0 +1,14 @@
+Here are the top 10 important keywords and trends extracted from the meeting transcripts:
+
+• **API Integration**: Issues and challenges with API integration are a recurring theme across multiple meetings, with specific action items and decisions made to address these problems.
+• **Database**: Database-related issues, such as performance concerns, data accuracy, and schema updates, are mentioned in several meetings, highlighting the importance of database management.
+• **Timeline**: The project timeline is a frequent topic of discussion, with adjustments made to accommodate delays, setbacks, and changes to the project scope.
+• **Technical Debt**: The team acknowledges the accumulation of technical debt and makes decisions to address it, such as prioritizing specific tasks and allocating additional resources.
+• **Performance**: Performance issues, including database query performance and application crashes, are identified as blockers and require attention from the team.
+• **Design**: Design-related topics, such as UI enhancements, responsive design, and UX design, are discussed in several meetings, highlighting the importance of design in the project.
+• **Testing**: Testing, including user testing, is mentioned as a critical step in the project, with specific action items and decisions made to ensure thorough testing.
+• **Budget**: Budget-related concerns are raised in several meetings, with the team prioritizing expenses and making decisions to ensure the project stays within budget.
+• **Resources**: Resource allocation is a recurring theme, with the team making decisions to prioritize tasks, allocate additional resources, and adjust the project plan to accommodate changes.
+• **Project Management**: Project management is a critical aspect of the project, with the team discussing project planning, timelines, and milestones in several meetings.
+
+These keywords and trends suggest that the project is complex, with multiple technical and design challenges that require careful management and prioritization. The team is focused on addressing these challenges and ensuring the project stays on track, while also managing budget and resources effectively.
