@@ -94,7 +94,18 @@ docker-compose up --build
 | Backend API (Swagger UI) | http://localhost:8000/docs |
 | Backend Health Check | http://localhost:8000/health |
 | Analyze Endpoint | http://localhost:8000/analyze/invoke |
-| Frontend | http://localhost:3000 |
+| Frontend (Next.js) | http://localhost:3000 |
+| **Frontend (Chainlit)** | **http://localhost:8001** |
+
+---
+
+### Option C: Chainlit (Python-Native UI)
+For a faster, pure-python experience without React:
+1. **Run the Chainlit App**:
+   ```bash
+   chainlit run app_chainlit.py -w --port 8001
+   ```
+2. Access the UI at `http://localhost:8001`.
 
 #### Step 5 — Run the CLI inside Docker (optional)
 ```bash

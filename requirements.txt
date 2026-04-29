@@ -10,6 +10,7 @@ langchain_community
 langchain-huggingface
 langchain-openai
 langgraph
+chainlit
 
 # Server layer
 fastapi

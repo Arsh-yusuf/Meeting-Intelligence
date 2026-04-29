@@ -29,3 +29,6 @@ data/meetings.json
 .idea/
 *.swp
 *.swo
+
+# Chainlit
+.chainlit/
