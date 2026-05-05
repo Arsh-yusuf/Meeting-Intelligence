@@ -23,18 +23,27 @@ class AgentState(TypedDict):
 
 def proactive_rag_node(state: AgentState):
     print("---PROACTIVE RAG: FETCHING INTELLIGENCE---")
-    # Fetch more chunks to include both raw and summary docs
+    # Fetch chunks from Vector DB
     chunks = get_relevant_chunks(state["query"], k=10)
     context = "\n\n".join(chunks)
+    
+    # EXPLICITLY inject the master report (cache_summary.txt) into the context
+    # This ensures the LLM never misses the globally identified blockers and tasks.
+    master_report = ""
+    if os.path.exists("data/cache_summary.txt"):
+        with open("data/cache_summary.txt", "r") as f:
+            master_report = f.read()
     
     prompt = f"""
     You are a Meeting Intelligence AI. Answer the user query using the provided context.
     The context includes raw meeting transcripts, individual meeting summaries, and a master intelligence report.
     
-    If the query is global (e.g., 'What are the blockers?'), focus on the summaries and master report in the context.
-    If the query is specific (e.g., 'What did John say?'), focus on the raw transcript chunks.
+    IMPORTANT: The Master Report explicitly lists decisions and blockers. If the user asks about blockers, YOU MUST read the 'Identified Blockers' section of the Master Report.
     
-    Context:
+    Master Report:
+    {master_report}
+    
+    Vector DB Context:
     {context}
     
     Query: {state['query']}
