@@ -11,6 +11,8 @@ langchain-huggingface
 langchain-openai
 langgraph
 chainlit
+apscheduler
+slack_bolt
 
 # Server layer
 fastapi
